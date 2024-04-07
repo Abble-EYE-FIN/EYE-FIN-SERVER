@@ -3,16 +3,21 @@ from utils.utils import utils
 
 class mqttclient():
     def __init__(self) -> None:
-        self.client = mqtt.Client() 
+        print(utils.get_ip)
+        self.client = mqtt.Client("server_pubs") 
+        
+        self.client.on_connect = self.on_connect 
+        self.client.on_message = self.on_message
+        
+        self.client.will_set('server/status', b'{"status": "Off"}')
+        
         self.client.connect("broker.emqx.io", 1883, 60) 
-        self.client.on_connect('righthand/input')
-        self.client.on_connect('lefthand/input')
         self.client.loop_forever()
-        pass
 
-    def on_connect(self, userdata, topic : str, flags, rc):
+    def on_connect(self, client, userdata : str, flags, rc):
         print(f"Connected with result code {rc}")
-        self.client.subscribe(topic)
+        self.client.subscribe('righthand/input')
+        self.client.subscribe('lefthand/input')
 
     def publish(self, topic : str, message : str):
         try:
@@ -24,4 +29,6 @@ class mqttclient():
     def on_message(self, client, userdata, msg):
         message = msg.payload
         topic = msg.topic
+        print("message : ", message)
+        print("topic : ", topic)
         

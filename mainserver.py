@@ -1,9 +1,10 @@
 from utils.imports import *
 from utils.utils import utils
-from MQTTclient import mqttclient
+from source.MQTTclient import mqttclient
 
 class Server():
     def __init__(self) -> None:
+        print("Server Initiated")
         client = mqttclient()
         pass
 
@@ -12,4 +13,4 @@ class Server():
 
 if __name__ == "__main__":
     server = Server()
-    server.run()
+    # server.run()

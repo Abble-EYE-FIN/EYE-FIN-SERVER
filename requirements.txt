@@ -1,0 +1,10 @@
+paho-mqtt==1.6.1
+numpy==1.24.1
+entrypoints==0.3
+fastapi==0.101.0
+fastapi-mqtt==1.0.7
+fasteners==0.14.1
+fastimport==0.9.8
+jsonpickle==3.0.1
+jsonschema==3.2.0
+simplejson==3.16.0
