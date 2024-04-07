@@ -31,4 +31,6 @@ class mqttclient():
         topic = msg.topic
         print("message : ", message)
         print("topic : ", topic)
+
+        self.publish("server/response", f"rcv {message}")
         
