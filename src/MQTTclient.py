@@ -29,8 +29,9 @@ class mqttclient():
     def on_message(self, client, userdata, msg):
         message = msg.payload
         topic = msg.topic
-        print("message : ", message)
         print("topic : ", topic)
+        print("message : ", message)
+        
 
         self.publish("server/response", f"rcv {message}")
         

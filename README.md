@@ -10,8 +10,14 @@ sudo apt install -y mosquitto-clients
 
 pip3 install -r requirements.txt
 ```
+### How To Start Server
+1. Turn on Raspberry pi
+2. Press `ctrl + alt + t` then terminal will appear
+3. `cd eye-fin/EYE-FIN-SERVER`
+4. `python3 mainserver.py`
 
 
+### SYSTEM Diagram
 ![EF_SYS_DIA](https://github.com/Abble-EYE-FIN/EYE-FIN-SERVER/assets/68832065/8518dad6-f417-4aed-b2e5-2aba2abd5e48)
 
 ### Progress Report
