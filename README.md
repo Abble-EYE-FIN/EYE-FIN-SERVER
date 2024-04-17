@@ -15,6 +15,8 @@ pip3 install -r requirements.txt
 2. Press `ctrl + alt + t` then terminal will appear
 3. `cd eye-fin/EYE-FIN-SERVER`
 4. `python3 mainserver.py`
+5. Create another terminal and type in `ifconfig`
+6. look for `wlan0` kind of stuff... this is the IP address
 
 
 ### SYSTEM Diagram
