@@ -3,7 +3,8 @@ from utils.utils import utils
 
 class mqttclient():
     def __init__(self) -> None:
-        print(utils.get_ip)
+        util = utils()
+        print(util.get_ip())
         self.client = mqtt.Client("server_pubs") 
         
         self.client.on_connect = self.on_connect 
@@ -11,7 +12,7 @@ class mqttclient():
         
         self.client.will_set('server/status', b'{"status": "Off"}')
         
-        self.client.connect("broker.emqx.io", 1883, 60) 
+        self.client.connect("localhost", 1883, 60) 
         self.client.loop_forever()
 
     def on_connect(self, client, userdata : str, flags, rc):
@@ -32,6 +33,4 @@ class mqttclient():
         print("topic : ", topic)
         print("message : ", message)
         
-
-        self.publish("server/response", f"rcv {message}")
-        
+        self.publish("server/response", f"rcv {message}") 

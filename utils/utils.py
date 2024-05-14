@@ -28,6 +28,6 @@ class utils:
     def get_ip(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(("8.8.8.8", 80))
-        IP = s.getsockname()[0]
+        IP = s.getsockname()
         s.close()
         return IP
