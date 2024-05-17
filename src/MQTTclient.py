@@ -1,17 +1,18 @@
 from utils.imports import *
 from utils.utils import utils
+from SensorManager import SensorManager
 
 class mqttclient():
     def __init__(self) -> None:
-        util = utils()
-        print(util.get_ip())
+        u = utils()
+        self.sm1 = SensorManager()
+        self.sm2 = SensorManager()
+        print(u.get_ip())
+
         self.client = mqtt.Client("server_pubs") 
-        
         self.client.on_connect = self.on_connect 
         self.client.on_message = self.on_message
-        
         self.client.will_set('server/status', b'{"status": "Off"}')
-        
         self.client.connect("localhost", 1883, 60) 
         self.client.loop_forever()
 
@@ -28,9 +29,14 @@ class mqttclient():
             return False
         
     def on_message(self, client, userdata, msg):
-        message = msg.payload
         topic = msg.topic
-        print("topic : ", topic)
-        print("message : ", message)
+        if topic == "righthand/input":
+            self.publish("server/callback", f"rcvd R") 
+            data = self.sm1.interpreteMotion(msg.message)
+            requests.post("http://localhost:8000/post_right", data)
+        elif topic == "lefthand/input":
+            self.publish("server/callback", f"rcvd L") 
+            data = self.sm2.interpreteMotion(msg.message)
+            requests.post("http://localhost:8000/post_left", data)
         
-        self.publish("server/response", f"rcv {message}") 
+        self.publish("server/interp", f"data : {data}") 
