@@ -1,12 +1,12 @@
 from utils.imports import *
 from utils.utils import utils
-from SensorManager import SensorManager
+from src.SensorManager import SensorManager
 
 class mqttclient():
     def __init__(self) -> None:
         u = utils()
-        self.sm1 = SensorManager()
-        self.sm2 = SensorManager()
+        self.smL = SensorManager()
+        self.smR = SensorManager()
         print(u.get_ip())
 
         self.client = mqtt.Client("server_pubs") 
@@ -32,11 +32,12 @@ class mqttclient():
         topic = msg.topic
         if topic == "righthand/input":
             self.publish("server/callback", f"rcvd R") 
-            data = self.sm1.interpreteMotion(msg.message)
+            data = self.smL.interpreteMotion(msg.message)
             requests.post("http://localhost:8000/post_right", data)
+            
         elif topic == "lefthand/input":
             self.publish("server/callback", f"rcvd L") 
-            data = self.sm2.interpreteMotion(msg.message)
+            data = self.smR.interpreteMotion(msg.message)
             requests.post("http://localhost:8000/post_left", data)
         
         self.publish("server/interp", f"data : {data}") 
