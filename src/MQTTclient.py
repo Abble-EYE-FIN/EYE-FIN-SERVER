@@ -32,12 +32,12 @@ class mqttclient():
         topic = msg.topic
         if topic == "righthand/input":
             self.publish("server/callback", f"rcvd R") 
-            data = self.smL.interpreteMotion(msg.message)
+            data = self.smL.interpreteMotion(0,msg.message)
             requests.post("http://localhost:8000/post_right", data)
             
         elif topic == "lefthand/input":
             self.publish("server/callback", f"rcvd L") 
-            data = self.smR.interpreteMotion(msg.message)
+            data = self.smR.interpreteMotion(0,msg.message)
             requests.post("http://localhost:8000/post_left", data)
         
         self.publish("server/interp", f"data : {data}") 

@@ -1,26 +1,64 @@
 from utils.imports import *
-from utils.apiutils.models import BrailleLang,DBpost
+from src.SensorManager import SensorManager
+from utils.apiutils.models import BrailleLang,DBpost,FullSensorData
 
+# DB client
+# This part can be changed into AWS RDB 
 client = MongoClient(host='localhost', port=27017)
-router = APIRouter()
 db = client['brailleDB']
 
-@router.post('/post_left/', response_model=DBpost, status_code=status.HTTP_200_OK) # response_model=OpenCafe
-def post_left(item : BrailleLang):
-    # posts = db.posts
-    # left_post = {
-    #     "time" : datetime.datetime.now(),
-    #     "data" : data, 
-    # }
-    # post_id = posts.insert_one(left_post)
-    return True
+# set this file as router manager
+router = APIRouter()
 
-@router.post('/post_right/', response_model=DBpost, status_code=status.HTTP_200_OK) # response_model=OpenCafe
+smL = SensorManager()
+smR = SensorManager()
+
+# post calculated right hand data [mqtt]
+@router.post('/post_right/', response_model=DBpost, status_code=status.HTTP_201_CREATED)
 def post_right(item : BrailleLang):
     # posts = db.posts
-    # right_post = {
-    #     "time" : datetime.datetime.now(),
-    #     "data" : data, 
-    # }
+    right_post = {
+        "id" : "bbb",
+        "time" : datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        "data" : item.data, 
+    }
     # post_id = posts.insert_one(right_post)
-    return True
+    return right_post
+
+# post calculated left hand data [mqtt]
+@router.post('/post_left/', response_model=DBpost, status_code=status.HTTP_201_CREATED)
+def post_left(item : BrailleLang):
+    # posts = db.posts
+    left_post = {
+        "id" : "bbb",
+        "time" : datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        "data" : item.data, 
+    }
+    # post_id = posts.insert_one(left_post)
+    return left_post
+
+# post right hand data, interpretation takes place here [http]
+@router.post('/post_full_right/', response_model=DBpost, status_code=status.HTTP_200_OK)
+def post_full_right(item : FullSensorData):
+    data: str = smR.interpreteMotion(1,item)
+    # posts = db.posts
+    right_post = {
+        "id" : "aaa",
+        "time" : datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        "data" : data, 
+    }
+    # post_id = posts.insert_one(right_post)
+    return right_post
+
+# post left hand data, interpretation takes place here [http]
+@router.post('/post_full_left/', response_model=DBpost, status_code=status.HTTP_200_OK)
+def post_full_left(item : FullSensorData):
+    data: str = smL.interpreteMotion(1,item)
+    # posts = db.posts
+    left_post = {
+        "id" : "aaa",
+        "time" : datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        "data" : data, 
+    }
+    # post_id = posts.insert_one(left_post)
+    return left_post

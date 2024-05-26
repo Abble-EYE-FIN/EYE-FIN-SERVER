@@ -18,7 +18,7 @@ allow_anonymous true
 ```
 
 ### How To Start Server
-1. Turn on Raspberry pi
+1. Turn on Server PC
 2. Press `ctrl + alt + t` then terminal will appear
 3. `cd eye-fin/EYE-FIN-SERVER`
 4. `python3 server.py`
