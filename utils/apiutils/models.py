@@ -4,7 +4,6 @@ from dataclasses import dataclass
 
 @dataclass
 class BrailleLang(BaseModel):
-    id:int
     data:str
 
     class Config:
@@ -21,7 +20,6 @@ class DBpost(BaseModel):
 
 @dataclass
 class FullSensorData(BaseModel):
-    id:str
     time:str
     pos:str
     reference:List[float]
