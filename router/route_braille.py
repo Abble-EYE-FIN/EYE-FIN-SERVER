@@ -14,9 +14,10 @@ smL = SensorManager()
 smR = SensorManager()
 
 # post calculated right hand data [mqtt]
-@router.post('/post_right/', response_model=DBpost, status_code=status.HTTP_201_CREATED)
+@router.post('/post_right', response_model=DBpost, status_code=status.HTTP_201_CREATED)
 def post_right(item : BrailleLang):
     # posts = db.posts
+    print(item.data)
     right_post = {
         "id" : "bbb",
         "time" : datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
@@ -26,9 +27,10 @@ def post_right(item : BrailleLang):
     return right_post
 
 # post calculated left hand data [mqtt]
-@router.post('/post_left/', response_model=DBpost, status_code=status.HTTP_201_CREATED)
+@router.post('/post_left', response_model=DBpost, status_code=status.HTTP_201_CREATED)
 def post_left(item : BrailleLang):
     # posts = db.posts
+    print(item.data)
     left_post = {
         "id" : "bbb",
         "time" : datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
