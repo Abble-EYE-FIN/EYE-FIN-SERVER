@@ -17,6 +17,16 @@ listener 1883
 allow_anonymous true
 ```
 
+Build Docker Image
+```
+docker build -t {image name} .
+```
+
+Run Docker Image
+```
+docker run -rm -p 8000:8000 {image name}:{tag}
+```
+
 ### How To Start Server
 1. Turn on Server PC
 2. Press `ctrl + alt + t` then terminal will appear
