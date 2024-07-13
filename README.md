@@ -1,6 +1,8 @@
 # EYE-FIN-SERVER
 ## Linux Server System Repo
-### prerequisitories
+
+!!! Do not run step1 unless it's initial setup
+### Step1. prerequisitories
 Install python packages
 ```
 sudo apt update 
@@ -27,13 +29,12 @@ Run Docker Image
 docker run -rm -p 8000:8000 {image name}:{tag}
 ```
 
-### How To Start Server
+### Step2. How To Start Server
 1. Turn on Server PC
 2. Press `ctrl + alt + t` then terminal will appear
-3. `cd eye-fin/EYE-FIN-SERVER`
-4. `python3 server.py`
-5. Create another terminal and type in `ifconfig`
-6. look for `wlan0` kind of stuff... this is the IP address
+3. make two terminals
+4. `cd eye-fin/EYE-FIN-SERVER`
+5. type in `source braille/bin/activate` on both # <-- activate virtual environment>
 
 Main Server
 ```bash
